@@ -71,3 +71,11 @@ class ArticleService:
     def delete(db: Session, article: Article) -> None:
         db.delete(article)
         db.commit()
+
+    @staticmethod
+    def set_image_url(db: Session, article: Article, image_url: str) -> Article:
+        article.image_url = image_url
+        article.updated_at = datetime.now(timezone.utc)
+        db.commit()
+        db.refresh(article)
+        return article
